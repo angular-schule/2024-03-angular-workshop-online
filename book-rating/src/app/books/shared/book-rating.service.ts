@@ -9,10 +9,23 @@ export class BookRatingService {
   constructor() { }
 
   rateUp(book: Book): Book {
-    return book; // TODO
+    // Early Exit
+    if (book.rating >= 5) {
+      return book;
+    }
+
+    return {
+      ...book,
+      // rating: book.rating >= 5 ? 5 : book.rating + 1
+      // rating: Math.min(5, book.rating + 1)
+      rating: book.rating + 1
+    }
   }
 
   rateDown(book: Book): Book {
-    return book; // TODO
+    return {
+      ...book,
+      rating: Math.max(1, book.rating - 1)
+    }
   }
 }
