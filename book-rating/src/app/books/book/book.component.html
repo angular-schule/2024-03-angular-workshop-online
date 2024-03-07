@@ -6,8 +6,8 @@
       <div class="card-title">
         <h2>
           {{ book.title }}
-          <span class="badge bg-secondary">{{ book.rating }}</span>
         </h2>
+        <app-rating [value]="book.rating" />
       </div>
       <p>{{ book.description }}</p>
       <p>Preis: {{ book.price }}</p>
