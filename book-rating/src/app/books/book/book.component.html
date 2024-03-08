@@ -14,6 +14,17 @@
 
       <button type="button" class="btn btn-red" (click)="doRateDown()" [disabled]="book.rating <= minRating"> – </button>
       <button type="button" class="btn btn-green" (click)="doRateUp()" [disabled]="book.rating >= maxRating"> + </button>
+
+      <a [routerLink]="['/books', book.isbn]">Details</a>
+      <!--<a routerLink="/books">Dashboard</a>
+
+      <a [routerLink]="[book.isbn]">Details</a>
+      <a [routerLink]="['..', book.isbn]">Details</a>
+      <a [routerLink]="'/books/' + book.isbn">Details</a>
+
+      <a routerLink="/books/{{ book.isbn }}">Details</a>
+      <a routerLink="{{ book.isbn }}">Details</a>
+      <a [routerLink]="book.isbn">Details</a>-->
     </div>
   </div>
 }
