@@ -1,0 +1,11 @@
+<h2>Hallo im Admin-Bereich</h2>
+
+<nav>
+  @for(item of navItems; track $index) {
+    <a [routerLink]="item.url">{{ item.label }}</a><br>
+  }
+</nav>
+
+<div style="border: 2px solid red; padding: 20px">
+  <router-outlet></router-outlet>
+</div>
