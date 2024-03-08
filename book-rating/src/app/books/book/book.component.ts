@@ -15,6 +15,9 @@ export class BookComponent {
   // von oben nach unten
   @Input() book?: Book;
 
+  @Input() minRating = 0;
+  @Input() maxRating = 10;
+
   // hier fließen Daten hinaus zur Elternkomponente
   // von unten nach oben
   @Output() rateUp = new EventEmitter<Book>();

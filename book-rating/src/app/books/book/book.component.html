@@ -12,8 +12,8 @@
       <p>{{ book.description }}</p>
       <p>Preis: {{ book.price | currency:'EUR' }}</p>
 
-      <button type="button" class="btn btn-green" (click)="doRateUp()"> + </button>
-      <button type="button" class="btn btn-red" (click)="doRateDown()"> – </button>
+      <button type="button" class="btn btn-red" (click)="doRateDown()" [disabled]="book.rating <= minRating"> – </button>
+      <button type="button" class="btn btn-green" (click)="doRateUp()" [disabled]="book.rating >= maxRating"> + </button>
     </div>
   </div>
 }
