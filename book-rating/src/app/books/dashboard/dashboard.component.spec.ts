@@ -37,4 +37,23 @@ describe('DashboardComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should trigger service.rateUp for component.doRateUp', () => {
+    // BRS anfordern. Das ist aber eigentlich unser ratingMock
+    const service = TestBed.inject(BookRatingService);
+
+    // Testbuch
+    const testBook = { isbn: '111' } as Book; // Type Assertion // VORSICHT!
+
+    // Methode überwachen / Spy
+    // spyOn(service, 'rateUp').and.returnValue(testBook);
+    // spyOn(service, 'rateUp').and.callFake(b => b)
+    spyOn(service, 'rateUp').and.callThrough();
+
+    // Act
+    component.doRateUp(testBook);
+
+    // prüfen, ob Servicemethode aufgerufen wurde
+    expect(service.rateUp).toHaveBeenCalledOnceWith(testBook);
+  });
 });
