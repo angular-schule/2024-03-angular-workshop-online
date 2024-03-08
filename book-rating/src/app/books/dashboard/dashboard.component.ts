@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Book } from '../shared/book';
 import { BookComponent } from '../book/book.component';
 import { BookRatingService } from '../shared/book-rating.service';
+import { BookStoreService } from '../shared/book-store.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,26 +13,16 @@ import { BookRatingService } from '../shared/book-rating.service';
 })
 export class DashboardComponent {
   books: Book[] = [];
+  // books = signal<Book[]>([]);
 
-  // private rs2 = inject(BookRatingService);
+  // private rs = inject(BookRatingService);
+  // private bs = inject(BookStoreService);
 
-  constructor(private rs: BookRatingService) {
-    this.books = [
-      {
-        isbn: '123',
-        title: 'Angular',
-        description: 'Das große Praxisbuch',
-        price: 42.9,
-        rating: 5,
-      },
-      {
-        isbn: '456',
-        title: 'Vue.js',
-        description: 'Das grüne Framework',
-        price: 36.9,
-        rating: 3,
-      },
-    ];
+  constructor(private rs: BookRatingService, private bs: BookStoreService) {
+    this.bs.getAll().subscribe(books => {
+        this.books = books;
+        // this.books.set(books);
+      });
   }
 
   doRateUp(book: Book) {
