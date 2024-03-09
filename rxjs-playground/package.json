@@ -1,0 +1,29 @@
+{
+  "name": "rxjs-workshop",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/common": "^17.2.4",
+    "@angular/compiler": "^17.2.4",
+    "@angular/core": "^17.2.4",
+    "@angular/forms": "^17.2.4",
+    "@angular/platform-browser": "^17.2.4",
+    "@angular/platform-browser-dynamic": "^17.2.4",
+    "@angular/router": "^17.2.4",
+    "bootstrap": "^5.2.1",
+    "rxjs": "~7.5.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.14.2"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^17.2.3",
+    "@angular/cli": "^17.2.3",
+    "@angular/compiler-cli": "^17.2.4",
+    "typescript": "~5.2.2"
+  }
+}
