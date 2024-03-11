@@ -6,7 +6,7 @@ export const routes: Routes = [
   // ...booksRoutes,
   {
     path: 'books',
-    loadChildren: () => import('./books/books.routes').then(m => m.booksRoutes)
+    loadChildren: () => import('./books/books.routes')
   }
 
   // achtung: Wildcard immer ganz unten!
