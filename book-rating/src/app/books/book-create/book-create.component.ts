@@ -1,6 +1,7 @@
 import { JsonPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Book } from '../shared/book';
 
 @Component({
   selector: 'app-book-create',
@@ -60,5 +61,24 @@ export class BookCreateComponent {
 
     return control.hasError(errorCode) && control.touched;
     // return control.errors?.[errorCode] // TODO
+  }
+
+  submitForm() {
+    if (this.bookForm.invalid) {
+      return;
+    }
+
+    /*
+    // falls "price" den typ "number | null" hat
+    const formValue = this.bookForm.getRawValue();
+    const newBook: Book = {
+      ...formValue,
+      price: formValue.price ?? 0
+    };
+    */
+
+
+    const newBook: Book = this.bookForm.getRawValue();
+    // TODO
   }
 }
