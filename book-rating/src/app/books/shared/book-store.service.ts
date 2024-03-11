@@ -11,14 +11,12 @@ export class BookStoreService {
   private apiUrl = 'https://api.angular.schule';
   private http = inject(HttpClient);
 
-  constructor() { }
-
   getAll(): Observable<Book[]> {
     return this.http.get<Book[]>(this.apiUrl + '/books');
   }
 
   getSingle(isbn: string): Observable<Book> {
-    return this.http.get<Book>(this.apiUrl + '/books/' + isbn)
+    return this.http.get<Book>(this.apiUrl + '/books/' + isbn);
   }
 
   create(book: Book): Observable<Book> {
@@ -26,6 +24,10 @@ export class BookStoreService {
   }
 
   search(term: string): Observable<Book[]> {
-    return this.http.get<Book[]>(this.apiUrl + '/books/search/' + term)
+    return this.http.get<Book[]>(this.apiUrl + '/books/search/' + term);
+  }
+
+  delete(isbn: string): Observable<unknown> {
+    return this.http.delete<unknown>(this.apiUrl + '/books/' + isbn);
   }
 }
