@@ -2,6 +2,8 @@ import { JsonPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Book } from '../shared/book';
+import { BookStoreService } from '../shared/book-store.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-book-create',
@@ -43,6 +45,8 @@ export class BookCreateComponent {
     }),
   });
 
+  constructor(private bs: BookStoreService, private router: Router) {}
+
   isInvalid(controlName: string): boolean {
     const control = this.bookForm.get(controlName);
     if (!control) {
@@ -77,8 +81,17 @@ export class BookCreateComponent {
     };
     */
 
-
     const newBook: Book = this.bookForm.getRawValue();
+
+    this.bs.create(newBook).subscribe(receivedBook => {
+      // this.router.navigateByUrl('/books'); // Dashboard
+      this.router.navigate(['/books', receivedBook.isbn]); // Detailseite
+    });
+
     // TODO
+    // HTTP create
+    // bei Erfolg:
+      // - wegnavigieren, z.b. zur Liste oder zur Detailseite
+      // weitere Ideen: Popupfenster/Hinweismeldung, Formular zurücksetzen
   }
 }
