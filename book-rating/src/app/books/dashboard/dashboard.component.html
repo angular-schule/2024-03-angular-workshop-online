@@ -1,3 +1,5 @@
+<p><strong>{{ d | date:'medium' }}</strong></p>
+
 @for(b of books; track b.isbn) {
   <app-book
     [book]="b"
@@ -11,5 +13,6 @@
 
 
 <p>Anzahl Bücher: {{ books.length }}</p>
+
 
 

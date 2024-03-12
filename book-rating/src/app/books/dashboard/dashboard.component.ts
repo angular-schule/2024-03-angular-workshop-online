@@ -1,18 +1,25 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, inject, signal } from '@angular/core';
 import { Book } from '../shared/book';
 import { BookComponent } from '../book/book.component';
 import { BookRatingService } from '../shared/book-rating.service';
 import { BookStoreService } from '../shared/book-store.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [BookComponent],
+  imports: [BookComponent, DatePipe],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnDestroy {
+  d = Date.now();
+  private interval = setInterval(() => {
+    this.d = Date.now();
+    console.log('date', this.d);
+  }, 1000);
+
   books: Book[] = [];
   // books = signal<Book[]>([]);
 
@@ -24,6 +31,8 @@ export class DashboardComponent {
         this.books = books;
         // this.books.set(books);
       });
+
+
   }
 
   doRateUp(book: Book) {
@@ -59,5 +68,9 @@ export class DashboardComponent {
         return b;
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.interval);
   }
 }
