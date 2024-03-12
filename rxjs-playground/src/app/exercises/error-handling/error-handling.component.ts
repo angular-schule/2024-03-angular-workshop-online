@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ReplaySubject, throwError, of, EMPTY, retry, catchError, Observable } from 'rxjs';
+import { ReplaySubject, throwError, of, EMPTY, retry, catchError, Observable, from } from 'rxjs';
 
 import { ExerciseService } from '../exercise.service';
 import { HistoryComponent } from '../../shared/history/history.component';
@@ -35,12 +35,20 @@ export class ErrorHandlingComponent {
           sub.next('passiert!');
           sub.complete()
         });*/
-        return of('Nichts', 'passiert!');
+
+        // return ['Nichts', 'passiert!'];
+        // return of('Nichts', 'passiert!');
 
         // Fehler ignorieren
+        // return of();
+        // return from([]);
+        // return [];
+        // return EMPTY;
 
         // Fehler weiterwerfen
-
+        // return new Observable(sub => sub.error('MEIN FEHLER!'));
+        // return throwError(() => 'MEIN FEHLER!');
+        throw 'MEIN FEHLER!';
       })
     ).subscribe({
       next: e => this.logStream$.next(e),
