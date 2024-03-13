@@ -24,10 +24,6 @@ export class BookDetailsComponent {
       map(params => params.get('isbn')!),
       // filter((isbn): isbn is string => isbn !== null), // wenn man auf Non-Null Assertion verzichten möchte
       switchMap(isbn => this.bs.getSingle(isbn)),
-      catchError(err => {
-        // TODO
-        return EMPTY;
-      })
     );
 
     /*combineLatest([

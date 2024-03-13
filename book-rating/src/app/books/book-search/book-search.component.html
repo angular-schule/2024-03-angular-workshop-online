@@ -1,3 +1,22 @@
 <div class="form-group">
   <input type="text" class="form-control" [formControl]="searchForm">
 </div>
+
+<div>
+  @if (books$ | async; as books) {
+    <ul>
+      @for(book of books; track book.isbn) {
+        <li>{{ book.title }} ({{ book.isbn }})</li>
+      }
+    </ul>
+  }
+</div>
+<!--
+<ul>
+@for(book of books$ | async; track book.isbn) {
+  <li>{{ book.title }} ({{ book.isbn }})</li>
+} @empty {
+  <li>KEINE ERGEBNISSE!</li>
+}
+</ul>
+-->
