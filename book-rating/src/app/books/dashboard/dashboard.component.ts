@@ -4,6 +4,10 @@ import { BookComponent } from '../book/book.component';
 import { BookRatingService } from '../shared/book-rating.service';
 import { BookStoreService } from '../shared/book-store.service';
 import { DatePipe } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { BookActions } from '../store/book.actions';
+import { map } from 'rxjs';
+import { selectBooks } from '../store/book.selectors';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,16 +25,27 @@ export class DashboardComponent implements OnDestroy {
   }, 1000);
 
   books: Book[] = [];
+  books$ = this.store.select(selectBooks);
   // books = signal<Book[]>([]);
 
   // private rs = inject(BookRatingService);
   // private bs = inject(BookStoreService);
 
-  constructor(private rs: BookRatingService, private bs: BookStoreService) {
-    this.bs.getAll().subscribe(books => {
+  constructor(private rs: BookRatingService, private bs: BookStoreService, private store: Store) {
+    // TODO: nicht selbst subscriben, sondern AsyncPipe nutzen
+    this.store.select(selectBooks).subscribe(books => {
+      this.books = books;
+      // this.books.set(books);
+    });
+
+    this.store.dispatch(BookActions.loadBooks());
+
+
+
+    /*this.bs.getAll().subscribe(books => {
         this.books = books;
         // this.books.set(books);
-      });
+      });*/
 
 
   }
