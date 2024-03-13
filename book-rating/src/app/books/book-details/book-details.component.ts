@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { combineLatest } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs';
 import { BookStoreService } from '../shared/book-store.service';
 import { Book } from '../shared/book';
 
@@ -19,13 +19,14 @@ export class BookDetailsComponent {
     // const isbn = this.route.snapshot.paramMap.get('isbn') // path: 'books/:isbn'
 
     // PUSH
-    // TODO: Verschachtelte Subscriptions vermeiden
-    this.route.paramMap.subscribe(params => {
-      const isbn = params.get('isbn')!; // Non-Null Assertion
-      this.bs.getSingle(isbn).subscribe(b => {
-        this.book = b;
-      })
-    });
+
+    this.route.paramMap.pipe(
+      map(params => params.get('isbn')!),
+      // filter((isbn): isbn is string => isbn !== null), // wenn man auf Non-Null Assertion verzichten möchte
+      switchMap(isbn => this.bs.getSingle(isbn))
+    ).subscribe(b => {
+      this.book = b;
+    })
 
     /*combineLatest([
       this.route.paramMap,
