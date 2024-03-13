@@ -24,18 +24,19 @@ export class CreatingComponent {
 
     /******************************/
 
+    // CREATION FUNCTIONS
     // of('Leipzig', 'Nürnberg', 'Köln')
     // from([1,2,3,4,5])
     // interval(1000)       // ---0---1---2---3---4---5 ...
     // timer(1000, 1000)    // ---0---1---2---3---4---5 ...
     // timer(3000)          // ---------0|
     // timer(2000, 1000)    // ------0---1---2---3---4---5 ...
-    // timer(0, 1000)    // 0---1---2---3---4---5 ...
+    // timer(0, 1000)       // 0---1---2---3---4---5 ...
 
     timer(1000).pipe(
       map(e => e * 3),
       filter(e => e % 2 === 0),
-      endWith(9999)
+      // endWith(9999)
     ).subscribe({
       next: e => this.log(e),
       complete: () => this.log('COMPLETE')
@@ -43,6 +44,7 @@ export class CreatingComponent {
 
     /******************************/
 
+    // Producer: erzeugt die Werte
     function producer(sub: Subscriber<number>) {
       const result = Math.random();
       sub.next(result);
@@ -50,20 +52,43 @@ export class CreatingComponent {
       sub.next(100);
       sub.next(200);
 
-      setTimeout(() => sub.next(6666), 2000)
-      setTimeout(() => sub.complete(), 4000)
+      const timer1 = setTimeout(() => {
+        console.log('TIMER 1');
+        sub.next(6666)
+      }, 8000)
+      const timer2 = setTimeout(() => {
+        console.log('TIMER 2');
+        sub.complete()
+      }, 15000)
+
+      // Teardown Logic
+      return () => {
+        console.log('TEARDOWN');
+        clearTimeout(timer1);
+        clearTimeout(timer2);
+      };
     }
 
-
+    // Observer: hört von außen zu
     const obs: Observer<number> = {
       next: e => console.log(e),
       error: (err: any) => console.error(err),
       complete: () => console.log('Fertig'),
     };
 
-    // Finnische Notation
+    // Observable: verpackt den Producer und
+    // vermittelt Werte zwischen Producer und Observer
+    // Finnische Notation $
     const myObservable$ = new Observable(producer);
-    // myObservable$.subscribe(obs);
+
+    // subscribe: intern wird Producer aufgerufen,
+    // Werte werden an Observer zugestellt
+    const sub = myObservable$.subscribe(obs);
+
+    setTimeout(() => {
+      console.log('UNSUBSCRIBE')
+      sub.unsubscribe();
+    }, 4000)
 
 
     // of(1, 2, 3)
@@ -74,6 +99,17 @@ export class CreatingComponent {
       sub.complete();
     });
 
+    // so KÖNNTE Observable implementiert werden
+    /*class MyObservable {
+      constructor(private producer: any) {}
+
+      subscribe(obs: Partial<Observer<any>>) {
+        const subscriber = sanitizeObserver(obs);
+        this.producer(subscriber);
+      }
+    }*/
+
+    // manueller Aufruf ohne echtes Observable
     // producer(obs);
 
 

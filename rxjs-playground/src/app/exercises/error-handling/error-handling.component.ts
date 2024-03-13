@@ -43,7 +43,7 @@ export class ErrorHandlingComponent {
         // return of();
         // return from([]);
         // return [];
-        // return EMPTY;
+        // return EMPTY; // Observable, das nichts liefert und sofort completet
 
         // Fehler weiterwerfen
         // return new Observable(sub => sub.error('MEIN FEHLER!'));
