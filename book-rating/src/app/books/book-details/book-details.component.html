@@ -1,4 +1,4 @@
-@if (book) {
+@if (book$ | async; as book) {
   <h2>{{ book.title }}</h2>
   <p>{{ book.description }}</p>
 }
@@ -6,4 +6,5 @@
 <hr>
 
 <a routerLink="/books">Dashboard</a><br>
-<a routerLink="/books/9783864909467">Angular-Buch</a>
+<a routerLink="/books/9783864909467">Angular-Buch</a><br>
+<a routerLink="/books/INVALID">INVALID</a>
